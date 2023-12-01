@@ -3,6 +3,34 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>データベースへのデータ格納と表示</title>
+<!-- jQueryのCDNを読み込む -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+// データを非同期で取得して表示する関数
+function displayDataAjax() {
+    $.ajax({
+        url: "<?php echo $_SERVER['PHP_SELF']; ?>", // 同じページを指定
+        type: "GET",
+        data: { display: true }, // GETリクエストに表示フラグを追加
+        success: function(response) {
+            // レスポンスを表示する要素に挿入
+            $("#displayResult").html(response);
+        },
+        error: function(xhr, status, error) {
+            console.error("Ajaxエラー:", status, error);
+        }
+    });
+}
+
+// ページが読み込まれたときに実行
+$(document).ready(function() {
+    // データ表示ボタンがクリックされたときにAjax関数を呼び出す
+    $("#displayButton").click(function() {
+        displayDataAjax();
+    });
+});
+</script>
 </head>
 <body>
 
